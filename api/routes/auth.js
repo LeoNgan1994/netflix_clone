@@ -7,13 +7,19 @@ const { aesEncrypt, aesDecrypt } = require("../util");
 // Register
 router.post("/register", async (req, res) => {
   console.log(`req.body`, req.body);
-  const newUser = UserModel({
-    username: req.body.username,
-    email: req.body.email,
-    password: aesEncrypt(req.body.password, process.env.SECRET_KEY),
-  });
-
   try {
+    const checkExists = UserModel.findOne({ email: req.body.email });
+    if (checkExists) {
+      res.status(401).json("user already exists");
+      return;
+    }
+
+    const newUser = UserModel({
+      username: req.body.username,
+      email: req.body.email,
+      password: aesEncrypt(req.body.password, process.env.SECRET_KEY),
+    });
+
     const user = await newUser.save();
     res.status(201).json(user);
   } catch (error) {

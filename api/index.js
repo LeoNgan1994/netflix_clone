@@ -9,7 +9,8 @@ const port = 8800;
 
 const authRoute = require("./routes/auth");
 const userRoute = require("./routes/users");
-
+const movieRoute = require("./routes/movies");
+const listRoute = require("./routes/lists");
 
 mongoose
   .connect(process.env.MONGO_URL)
@@ -21,6 +22,8 @@ app.use(bp.urlencoded({ extended: true }));
 
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
+app.use("/api/movies", movieRoute);
+app.use("/api/lists", listRoute);
 
 app.listen(port, async () => {
   console.log(`server start on port ${port}!`);
