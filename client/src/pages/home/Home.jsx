@@ -1,3 +1,4 @@
+import { List } from "components/list/List";
 import React from "react";
 import { Featured, Navbar } from "../../components";
 import "./home.scss";
@@ -8,6 +9,10 @@ export const Home = () => {
       <Navbar />
 
       <Featured type={"movie"} />
+      <List />
+      <List />
+      <List />
+      <List />
     </div>
   );
 };
