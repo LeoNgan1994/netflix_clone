@@ -30,10 +30,10 @@ export const ListItem = ({ index }) => {
           <video src={trailer} autoPlay={true} loop></video>
           <div className="itemInfo">
             <div className="icons">
-              <PlayArrow  className="'"/>
-              <FavoriteBorderOutlined  className="'"/>
-              <ThumbUpOutlined className="'" />
-              <ThumbDownOutlined className="'" />
+              <PlayArrow  className="icon"/>
+              <FavoriteBorderOutlined  className="icon"/>
+              <ThumbUpOutlined className="icon" />
+              <ThumbDownOutlined className="icon" />
             </div>
             <div className="itemInfoTop">
               <span>1 hour 14 mins</span>
@@ -43,8 +43,7 @@ export const ListItem = ({ index }) => {
             <div className="desc">
               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit
               voluptatibus ut totam? Aliquid nihil voluptatem fugit labore
-              reprehenderit, quisquam, itaque officia eaque commodi velit
-              libero, a quibusdam consequuntur praesentium nam.
+              reprehenderit.
             </div>
             <div className="genre">Action</div>
           </div>

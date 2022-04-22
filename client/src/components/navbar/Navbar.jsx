@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./navbar.scss";
 import Logo from "../../assets/images/logo-nav.png";
-
+import { Link } from "react-router-dom";
 import { ArrowDropDown, Notifications, Search } from "@material-ui/icons";
 
 export const Navbar = () => {
@@ -16,9 +16,15 @@ export const Navbar = () => {
       <div className="container">
         <div className="left">
           <img src={Logo} alt="logo"></img>
-          <span>Home</span>
-          <span>Series</span>
-          <span>Movies</span>
+          <Link to="/" className="link">
+            <span>Home</span>
+          </Link>
+          <Link to="/series" className="link">
+            <span>Series</span>
+          </Link>
+          <Link to="/movies" className="link">
+            <span>Movies</span>
+          </Link>
           <span>New and Popular</span>
           <span>My Lists</span>
         </div>

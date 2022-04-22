@@ -43,6 +43,38 @@
       .icons {
         display: flex;
         margin-bottom: 5px;
+
+        .icon{
+          border: 2px solid #fff;
+          padding: 5px;
+          border-radius: 50%;
+          margin-right: 10px;
+          font-size: 16px;
+        }
+      }
+
+      .itemInfoTop {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+        font-size: 14px;
+        font-weight: 600;
+        color: rgba($color: gray, $alpha: 1);
+
+        .limit{
+          border: 1px solid gray;
+          padding: 1px 3px;
+          margin: 0 10px;
+        }
+      }
+
+      .desc{
+        font-size: 14px;
+        margin-bottom: 20px;
+      }
+      .genre{
+        font-size: 13px;
+        color: lightgray;
       }
     }
   }
