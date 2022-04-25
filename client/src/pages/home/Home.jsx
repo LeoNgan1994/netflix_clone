@@ -1,15 +1,14 @@
-import axios from "axios";
-import { List } from "components/list/List";
-import React, { useEffect, useState } from "react";
-import { Featured, Navbar } from "../../components";
 import "./home.scss";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import React from "react";
+import { Featured, List, Navbar } from "components";
 
 export const Home = ({ type }) => {
   const [lists, setLists] = useState([]);
   const [genre, setGenre] = useState(null);
-  useEffect(() => {
-    console.log();
 
+  useEffect(() => {
     const getRandomLists = async () => {
       try {
         const res = await axios.get(
@@ -19,14 +18,14 @@ export const Home = ({ type }) => {
           {
             headers: {
               token:
-                "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTRmNTFmNGRjZDEwNTkwZjEzYmY4OCIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY1MDYxNjY0NSwiZXhwIjoxNjUxMDQ4NjQ1fQ.BdmssGo4KGO40oifV6MeQ13EjCvMNfdfo_xBe4DPqgg",
+                "Bearer " +
+                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTRmNTFmNGRjZDEwNTkwZjEzYmY4OCIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY1MDg0OTA4MiwiZXhwIjoxNjUxMjgxMDgyfQ.OxG7gBRrB8rTQGHDc6a5mtRstAcGx-e2WwOQAPR4MMg",
             },
           }
         );
-        console.log(`res`, res);
         setLists(res.data);
-      } catch (error) {
-        console.log(error);
+      } catch (err) {
+        console.log(err);
       }
     };
     getRandomLists();
@@ -35,12 +34,10 @@ export const Home = ({ type }) => {
   return (
     <div className="home">
       <Navbar />
-
       <Featured type={type} />
-      <List dataList={null} />;
-      {/* {lists.map((x) => {
-        <List dataList={x} />;
-      })} */}
+      {lists.map((list, index) => (
+        <List list={list} key={index} />
+      ))}
     </div>
   );
 };

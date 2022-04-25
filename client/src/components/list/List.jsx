@@ -3,10 +3,10 @@ import {
   ArrowForwardIosOutlined,
 } from "@material-ui/icons";
 import { ListItem } from "components/listItem";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./List.scss";
 
-export const List = ({ dataList }) => {
+export const List = ({ list }) => {
   const [slideNumber, setSlideNumber] = useState(0);
   const [isMoving, setIsMoving] = useState(false);
   const listRef = useRef(null);
@@ -23,6 +23,7 @@ export const List = ({ dataList }) => {
       listRef.current.style.transform = `translateX(${-230 + distance}px)`;
     }
   };
+
   return (
     <div className="list">
       <span className="listTitle">Continue to watch</span>
@@ -35,12 +36,9 @@ export const List = ({ dataList }) => {
           style={{ display: !isMoving && "none" }}
         />
         <div className="container" ref={listRef}>
-          {/* {dataList.content.map((x, i) => {
-            <ListItem index={i} />;
-          })} */}
-          <ListItem index={1} />;
-          <ListItem index={2} />;
-          <ListItem index={3} />;
+          {list.content.map((item, i) => (
+            <ListItem key={i} item={item} index={i} />
+          ))}
         </div>
         <ArrowForwardIosOutlined
           className="sliderArrow right"

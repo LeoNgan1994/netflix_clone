@@ -1,54 +1,77 @@
+// @ts-nocheck
 import {
   FavoriteBorderOutlined,
   PlayArrow,
   ThumbDownOutlined,
   ThumbUpOutlined,
 } from "@material-ui/icons";
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import "./ListItem.scss";
-export const ListItem = ({ index }) => {
+export const ListItem = ({ index, item }) => {
   const [isHover, setIsHover] = useState(false);
-  const trailer =
-    "https://player.vimeo.com/external/371433846.sd.mp4?s=236da2f3c0fd273d2c6d9a064f3ae35579b2bbdf&profile_id=139&oauth2_token_id=57447761";
+  const [data, setData] = useState({});
+
+  useEffect(() => {
+    const getMovies = async () => {
+      try {
+        const res = await axios.get(`/movies/find/` + item, {
+          headers: {
+            token:
+              "Bearer " +
+              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTRmNTFmNGRjZDEwNTkwZjEzYmY4OCIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY1MDg0OTA4MiwiZXhwIjoxNjUxMjgxMDgyfQ.OxG7gBRrB8rTQGHDc6a5mtRstAcGx-e2WwOQAPR4MMg",
+          },
+        });
+        setData(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getMovies();
+  }, [item]);
+
   return (
-    <div
-      className="listItem"
-      style={{ left: isHover && index * 225 - 50 + index * 2.5 }}
-      onMouseEnter={() => {
-        setIsHover(true);
+    <Link
+      to={{
+        pathname: "/watch",
+        search: "",
+        hash: "",
       }}
-      onMouseLeave={() => {
-        setIsHover(false);
-      }}
+      state={{ movie: data }}
     >
-      <img
-        src="https://images.unsplash.com/photo-1611419010019-550124aef004?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80"
-        alt="fakeMovie1"
-      />
-      {isHover ? (
-        <>
-          <video src={trailer} autoPlay={true} loop></video>
-          <div className="itemInfo">
-            <div className="icons">
-              <PlayArrow  className="icon"/>
-              <FavoriteBorderOutlined  className="icon"/>
-              <ThumbUpOutlined className="icon" />
-              <ThumbDownOutlined className="icon" />
+      <div
+        className="listItem"
+        style={{ left: isHover && index * 225 - 50 + index * 2.5 }}
+        onMouseEnter={() => {
+          setIsHover(true);
+        }}
+        onMouseLeave={() => {
+          setIsHover(false);
+        }}
+      >
+        <img src={data?.img} alt="fakeMovie1" />
+        {isHover ? (
+          <>
+            <video src={data.trailer} autoPlay={true} loop></video>
+            <div className="itemInfo">
+              <div className="icons">
+                <PlayArrow className="icon" />
+                <FavoriteBorderOutlined className="icon" />
+                <ThumbUpOutlined className="icon" />
+                <ThumbDownOutlined className="icon" />
+              </div>
+              <div className="itemInfoTop">
+                <span>{data.duration}</span>
+                <span className="limit">{data.limit}</span>
+                <span>{data.year}</span>
+              </div>
+              <div className="desc">{data.desc}</div>
+              <div className="genre">{data.genre}</div>
             </div>
-            <div className="itemInfoTop">
-              <span>1 hour 14 mins</span>
-              <span className="limit">+18</span>
-              <span>2000</span>
-            </div>
-            <div className="desc">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit
-              voluptatibus ut totam? Aliquid nihil voluptatem fugit labore
-              reprehenderit.
-            </div>
-            <div className="genre">Action</div>
-          </div>
-        </>
-      ) : null}
-    </div>
+          </>
+        ) : null}
+      </div>
+    </Link>
   );
 };

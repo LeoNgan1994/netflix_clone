@@ -1,8 +1,30 @@
+// @ts-nocheck
 import { InfoOutlined, PlayArrow } from "@material-ui/icons";
 import "./featured.scss";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 export const Featured = ({ type }) => {
+  const [content, setContent] = useState({});
+
+  useEffect(() => {
+    const getRandomContent = async () => {
+      try {
+        const res = await axios.get(`movies/random?type=${type}`, {
+          headers: {
+            token:
+              "Bearer " +
+              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTRmNTFmNGRjZDEwNTkwZjEzYmY4OCIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY1MDg0OTA4MiwiZXhwIjoxNjUxMjgxMDgyfQ.OxG7gBRrB8rTQGHDc6a5mtRstAcGx-e2WwOQAPR4MMg",
+          },
+        });
+        setContent(res.data[0]);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getRandomContent();
+  }, [type]);
+
   return (
     <div className="featured">
       {type && (
@@ -26,21 +48,10 @@ export const Featured = ({ type }) => {
           </select>
         </div>
       )}
-      <img
-        src="https://images.unsplash.com/photo-1510915361894-db8b60106cb1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-        alt=""
-      />
+      <img src={content.imgTitle} alt="" />
       <div className="info">
-        <img
-          src="https://images.unsplash.com/photo-1499415479124-43c32433a620?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1632&q=80"
-          alt=""
-        />
-        <span className="desc">
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id sit
-          recusandae voluptatum dolorum quas assumenda, minima, iste quia quos
-          quisquam natus amet voluptatem adipisci minus dolore obcaecati?
-          Deleniti, dolore laboriosam!
-        </span>
+        <img src={content?.img} alt="imgTitle" />
+        <span className="desc">{content.desc}</span>
         <div className="buttons">
           <button className="play">
             <PlayArrow />

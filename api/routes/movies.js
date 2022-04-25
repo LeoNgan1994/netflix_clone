@@ -3,7 +3,7 @@ const MovieModel = require("../models/Movie");
 const verifyToken = require("../verifyToken");
 
 // Create
-router.post("/",verifyToken, async (req, res) => {
+router.post("/", verifyToken, async (req, res) => {
   if (req.user.isAdmin) {
     const movie = new MovieModel(req.body);
 
@@ -26,6 +26,15 @@ router.get("/", async (req, res) => {
     res.status(200).json(movies.reverse());
   } catch (error) {
     res.status(500).json(error);
+  }
+});
+
+router.get("/find/:id", verifyToken, async (req, res) => {
+  try {
+    const movie = await MovieModel.findById(req.params.id);
+    res.status(200).json(movie);
+  } catch (err) {
+    res.status(500).json(err);
   }
 });
 
